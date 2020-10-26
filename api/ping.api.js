@@ -15,11 +15,11 @@ export const initRouter = () => {
         router: router
     }
 
-    router.get('/ping', AsyncWrapper(ping))
+    router.get('/', AsyncWrapper(ping))
     return thisRouter
 }
 
-export const ping = async (req, res, next) => {
+export const ping = async (req, res) => {
     logger.debug(`here`)
     const result = await service.ping()
     res.json(result)
