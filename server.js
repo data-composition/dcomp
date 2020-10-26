@@ -26,7 +26,7 @@ async function main() {
         process.env[key] = envConfig[key]
     }
 
-    if (fs.existsSync("./config/secure")) {
+    if (fs.existsSync(`./config/secure/config.${env}.env`)) {
         const envSecureConfig = dotenv.parse(fs.readFileSync(`./config/secure/config.${env}.env`))
         for (const key in envSecureConfig) {
             process.env[key] = envSecureConfig[key]
