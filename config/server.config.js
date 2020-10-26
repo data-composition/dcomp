@@ -3,7 +3,6 @@ import helmet from 'helmet'
 import path from 'path'
 import ConfigService from '../service/config.service';
 import readReadSync from 'recursive-readdir-sync'
-import chalk from 'chalk'
 import hbs from 'express-handlebars'
 import mongoose from 'mongoose'
 
@@ -16,9 +15,12 @@ export default class ServerConfig {
         this.app.set('port', port)
 
         this.app.use(helmet())
-        this.registerLogMiddleware()
         this.setViewEngine()
         this.setDb()
+
+        middlewares.forEach(middleware => {
+            this.registerMiddleware(middleware)
+        })
 
         try {
             this.bindController(controllerPath)
@@ -40,34 +42,6 @@ export default class ServerConfig {
     registerMiddleware(middleware) {
         this.app.use(middleware)
         return this
-    }
-
-    getActualRequestDurationInMilliseconds = (start) => {
-        const NS_PER_SEC = 1e9 // convert to nanoseconds
-        const NS_TO_MS = 1e6 // convert to milliseconds
-        const diff = process.hrtime(start)
-        return (diff[0] * NS_PER_SEC + diff[1]) / NS_TO_MS
-    }
-
-    logAdvice = (req, res, next) => {
-        let method = req.method
-        let url = req.url
-        let status = res.statusCode
-        const start = process.hrtime()
-
-        next()
-
-        const durationInMilliseconds = this.getActualRequestDurationInMilliseconds(start)
-
-        let statusColor = chalk.green(status)
-        if (status !== 200) statusColor = chalk.red(status)
-
-        let log = `${method} ${chalk.yellow(url)} ${statusColor} ${durationInMilliseconds.toLocaleString()} ms`
-        logger.info(log)
-    }
-
-    registerLogMiddleware() {
-        return this.registerMiddleware(this.logAdvice)
     }
 
     bindController(controllerPath) {

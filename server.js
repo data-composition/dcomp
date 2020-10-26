@@ -8,6 +8,7 @@ import winston from 'winston'
 import winstonDaily from 'winston-daily-rotate-file'
 import 'date-utils'
 import chalk from 'chalk'
+import allAdvice from "./middleware/allAdvice"
 
 const {combine, timestamp, printf} = winston.format
 
@@ -84,7 +85,8 @@ async function main() {
     const server = new ServerConfig({
         port: process.env.PORT || 8000,
         controllerPath: path.join(__dirname, './controllers'),
-        apiPath: path.join(__dirname, './api')
+        apiPath: path.join(__dirname, './api'),
+        middlewares: [allAdvice]
     })
 
     await server.listen()

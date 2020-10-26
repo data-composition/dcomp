@@ -18,14 +18,10 @@ export const initRouter = () => {
     return thisRouter
 }
 
-export const getTrs = async (req, res, next) => {
-    logger.debug('test getUsers')
-    // Transaction.paginate({}, {limit: 10}, (err, result) => {
-    //     console.log(result)
-    //     res.json(result)
-    // })
-    const result = await Transaction.findOne().exec()
-    console.log(result)
-
+export const getTrs = async (req, res) => {
+    logger.debug('test getTrs')
+    const options = {sort: {day: -1}, limit: 10}
+    const result = await Transaction.paginate({}, options)
+    res.json(result)
 }
 
