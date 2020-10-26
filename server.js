@@ -25,9 +25,15 @@ async function main() {
     for (const key in envConfig) {
         process.env[key] = envConfig[key]
     }
-    const envSecureConfig = dotenv.parse(fs.readFileSync(`./config/secure/config.${env}.env`))
-    for (const key in envSecureConfig) {
-        process.env[key] = envSecureConfig[key]
+
+    if (fs.existsSync("./config/secure")) {
+        const envSecureConfig = dotenv.parse(fs.readFileSync(`./config/secure/config.${env}.env`))
+        for (const key in envSecureConfig) {
+            process.env[key] = envSecureConfig[key]
+        }
+    } else {
+        process.env["isSecureEnv"] = false
+        console.error("there is no secure env => must have secure env file for DB Connect at ./config/secure/..")
     }
 
 

@@ -38,8 +38,8 @@ export default class ServerConfig {
     }
 
     registerMiddleware(middleware) {
-        this.app.use(middleware);
-        return this;
+        this.app.use(middleware)
+        return this
     }
 
     getActualRequestDurationInMilliseconds = (start) => {
@@ -93,6 +93,7 @@ export default class ServerConfig {
                 logger.info('================================================================================')
                 logger.info('environment       : ' + ConfigService.NODE_ENV)
                 logger.info(`Listening on port : ${this.port}`)
+                logger.info(`secure env check  : ${process.env["isSecureEnv"]}`)
                 logger.info('================================================================================')
             })
         } catch (error) {
