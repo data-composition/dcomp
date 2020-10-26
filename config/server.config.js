@@ -93,7 +93,7 @@ export default class ServerConfig {
                 logger.info('================================================================================')
                 logger.info('environment       : ' + ConfigService.NODE_ENV)
                 logger.info(`Listening on port : ${this.port}`)
-                logger.info(`secure env check  : ${process.env["isSecureEnv"]}`)
+                logger.info(`secure env check  : ${(!!process.env["isSecureEnv"])}`)
                 logger.info('================================================================================')
             })
         } catch (error) {
