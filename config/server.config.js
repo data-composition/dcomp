@@ -3,7 +3,7 @@ import helmet from 'helmet'
 import path from 'path'
 import ConfigService from '../service/config.service';
 import readReadSync from 'recursive-readdir-sync'
-import hbs from 'express-handlebars'
+import expHbs from 'express-handlebars'
 import mongoose from 'mongoose'
 
 export default class ServerConfig {
@@ -64,11 +64,11 @@ export default class ServerConfig {
     async listen() {
         try {
             this.app.listen(this.port, () => {
-                logger.info('================================================================================')
+                logger.info('==========================================================================')
                 logger.info('environment       : ' + ConfigService.NODE_ENV)
                 logger.info(`Listening on port : ${this.port}`)
                 logger.info(`secure env check  : ${(!!process.env["isSecureEnv"])}`)
-                logger.info('================================================================================')
+                logger.info('==========================================================================')
             })
         } catch (error) {
             logger.error(`listen error: ${error.message}`)
@@ -76,12 +76,14 @@ export default class ServerConfig {
     }
 
     setViewEngine() {
-        this.app.engine('hbs', hbs({
+        const hbs = expHbs.create({
             defaultLayout: 'main',
-            extname: '.hbs'
-        }))
-
+            extname: '.hbs',
+            partialsDir: [path.join(__dirname, '../views/partials')]
+        })
+        this.app.engine('hbs', hbs.engine)
         this.app.set('view engine', 'hbs')
+        this.app.use(Express.static('public'))
     }
 
     setDb() {
