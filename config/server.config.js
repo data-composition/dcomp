@@ -5,6 +5,7 @@ import ConfigService from '../service/config.service';
 import readReadSync from 'recursive-readdir-sync'
 import expHbs from 'express-handlebars'
 import mongoose from 'mongoose'
+import bodyParser from 'body-parser'
 
 export default class ServerConfig {
 
@@ -13,6 +14,8 @@ export default class ServerConfig {
         this.app = Express()
         this.app.set('env', ConfigService.NODE_ENV)
         this.app.set('port', port)
+        this.app.use(bodyParser.urlencoded({extended: false}))
+        this.app.use(bodyParser.json())
 
         this.app.use(helmet())
         this.setViewEngine()

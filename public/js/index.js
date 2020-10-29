@@ -1,3 +1,12 @@
+const userId = uuidv4();
+
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
 $(document).ready(function(){
     setInterval(function(){
         log();
@@ -27,7 +36,28 @@ function log() {
     }
 
     // console.log(`w:${w} h:${h}, top:${top} left:${left} w/2:${w/2}`)
-    console.log(`target: ${t}`)
+    // console.log(`target: ${t}`)
+
+    var data = {
+        userId: userId,
+        top: top,
+        left: left,
+        target: t
+    };
+
+    // var url = 'https://dc.egstep.com/api/log'
+    var url = 'http://localhost:3000/api/log'
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then(function(response) {
+        return response.json();
+    }).then(function(data) {
+        console.log('ok:', data)
+    });
 
     // fetch('http://example.com/movies.json')
     //   .then(response => response.json())
