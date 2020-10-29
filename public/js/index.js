@@ -1,4 +1,7 @@
 const userId = uuidv4();
+const apiUrl = 'https://dc.egstep.com'
+// const apiUrl = 'http://localhost:3000'
+
 
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -45,9 +48,7 @@ function log() {
         target: t
     };
 
-    // var url = 'https://dc.egstep.com/api/log'
-    var url = 'http://localhost:3000/api/log'
-    fetch(url, {
+    fetch(apiUrl + '/api/log', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

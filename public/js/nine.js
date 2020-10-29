@@ -1,9 +1,6 @@
 document.addEventListener("DOMContentLoaded", function(){
 
-    // var url = 'https://dc.egstep.com/api/log'
-    var url = 'http://localhost:3000/api/log'
-
-    fetch(url)
+    fetch(apiUrl + '/api/log')
       .then(response => response.json())
       .then(data => console.log(data));
 

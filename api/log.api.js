@@ -32,8 +32,6 @@ export const postLog = async (req, res) => {
     log.time = req['commons'].startDate.toFormat('HH24MISS')
 
     log.save()
-    logger.debug(log)
-
     res.json({})
 }
 
