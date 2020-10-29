@@ -83,7 +83,7 @@ export default class ServerConfig {
         })
         this.app.engine('hbs', hbs.engine)
         this.app.set('view engine', 'hbs')
-        this.app.use(Express.static('public'))
+        this.app.use(Express.static(path.join(__dirname, '../public')))
     }
 
     setDb() {
