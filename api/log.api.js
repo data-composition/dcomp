@@ -15,11 +15,12 @@ export const initRouter = () => {
         router: router
     }
 
-    router.post('/', log)
+    router.get('/', getLog)
+    router.post('/', postLog)
     return thisRouter
 }
 
-export const log = async (req, res) => {
+export const postLog = async (req, res) => {
     const payload = req.body
 
     const log = new Log()
@@ -27,8 +28,17 @@ export const log = async (req, res) => {
     log.userId = payload.userId
     log.left = payload.left
     log.target = payload.target
+    log.day = req['commons'].startDate.toFormat('YYMMDD')
+    log.time = req['commons'].startDate.toFormat('HH24MISS')
+
     log.save()
     logger.debug(log)
 
     res.json({})
+}
+
+export const getLog = async (req, res) => {
+    const options = {sort: {day: -1, time: -1}, limit: 10}
+    const result = await Log.paginate({}, options)
+    res.json(result)
 }

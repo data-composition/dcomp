@@ -36,6 +36,7 @@ const allAdvice = (req, res, next) => {
     // make commons ====================================================================================================
     const commons = new CommonArea()
     commons.gid = req['gid']
+    commons.startDate = startDate
     req['commons'] = commons
 
     // after ===========================================================================================================

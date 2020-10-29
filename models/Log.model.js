@@ -5,7 +5,9 @@ const logSchema = new mongoose.Schema({
     userId: String,
     top: Number,
     left: Number,
-    target: Number
+    target: Number,
+    day: String,
+    time: String
 })
 
 logSchema.plugin(mongoosePaginate)

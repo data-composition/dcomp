@@ -56,7 +56,6 @@ function log() {
     }).then(function(response) {
         return response.json();
     }).then(function(data) {
-        console.log('ok:', data)
     });
 
     // fetch('http://example.com/movies.json')
