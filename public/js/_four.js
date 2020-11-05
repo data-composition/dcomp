@@ -17,6 +17,7 @@ var t = function( p ) {
   
 	};
   };
+  
   document.addEventListener("DOMContentLoaded", function(){
-    var myp5 = new p5(t, 'c2');
+	var myp5 = new p5(t, 'c4');
 });

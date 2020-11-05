@@ -1,4 +1,4 @@
-let sketch = function(p) {
+let sevenSketch = function(p) {
     let width = 900;
     let height = 400;
     let offset = -80;
@@ -120,6 +120,6 @@ let sketch = function(p) {
 
 
 document.addEventListener("DOMContentLoaded", function(){
-    new p5(sketch);
+	var myp5 = new p5(sevenSketch, 'c7');
 });
   
