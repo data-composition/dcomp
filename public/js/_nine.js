@@ -12,5 +12,5 @@ document.addEventListener("DOMContentLoaded", function(){
           }
           document.querySelector('#nine').innerHTML = userIds
       });
-    }, 1000)
+    }, 300)
 })

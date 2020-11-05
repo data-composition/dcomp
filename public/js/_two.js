@@ -4,7 +4,7 @@ let twoSketch = function(p) {
 	let noiseOcatave = 4;
 	let noiseResoulution= 0.5;
 	p.setup = function() {
-	  p.createCanvas(900,400);
+	  p.createCanvas(1000,500);
 	  p.noStroke();
 	  p.colorMode(p.HSB);
 	  p.noiseDetail(noiseOcatave, noiseResoulution);
@@ -14,14 +14,15 @@ let twoSketch = function(p) {
 	  tick+=1;
 	  p.clear();
   
+      p.fill(255,0.5);
+	  p.rect(p.width/2, 0, p.width/2, p.height);
+	  
 	  for (var i = 0; i < p.width/2 / psize; i++) {
 		for (var j = 0; j < p.height / psize; j++) {
-		  display_noise_time(45+ i, j);
+		  display_noise_time(50+ i, j);
 		}
 	  }
-	  p.noFill();
-	  p.stroke(1);
-	  p.rect(0, 0, p.width-1, p.height-1);
+	
 	  
 	  // p.fill(100);
 	  p.text('the number of the entire octaves: ' + '[ ' + psize + ' , ' + noiseOcatave + ' , ' + noiseResoulution + ' ]', p.width/2 - 250, 10);
@@ -40,7 +41,7 @@ let twoSketch = function(p) {
 	
 	let display_noise_time = function(x, y) {
 	  p.fill(0);
-	  let d = p.noise(x/9, y / 10, tick / 50) * psize * 0.7;
+	  let d = p.noise(x/9, y / 50, tick / 50) * psize * 0.7;
 	  p.rect(x * psize, y * psize, d, d);
 	}
   

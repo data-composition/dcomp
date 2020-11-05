@@ -1,6 +1,6 @@
 let sevenSketch = function(p) {
-    let width = 900;
-    let height = 400;
+    let width = 1000;
+    let height =500;
     let offset = -80;
   
     let flow_cell_size =8;
