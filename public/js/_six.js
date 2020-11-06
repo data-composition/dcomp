@@ -18,7 +18,7 @@ let sixSketch = function(p) {
   }
   let draw_text = function(i, n){
     p.fill(90);
-    p.text(n + '   now on working' + '    ' + n * 0.00001 + '   we got this', p.width/2+10, (p.random(35)) * (i+1));
+    p.text(n + '   now on working' + '    ' + n * 0.00001 + '   we got this', 0, (p.random(35)) * (i+1));
   }
 }
 

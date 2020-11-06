@@ -1,7 +1,7 @@
-let sevenSketch = function(p) {
+let sevenSketch = function (p) {
   let THE_SEED;
 
-  let width =100;
+  let width = 100;
 
   let resolution = 6;
 
@@ -10,13 +10,13 @@ let sevenSketch = function(p) {
 
   let plate_padding = 2;
 
-  let number_of_blocks =10;
+  let number_of_blocks = 10;
   let blocks = [];
 
   let palette;
-  let updateCound = 10+(p.random(5));
+  let updateCound = 10 + (p.random(5));
 
-  p.setup = function() {
+  p.setup = function () {
     p.createCanvas(1000, 500);
     p.clear();
     p.frameRate(updateCound);
@@ -26,11 +26,11 @@ let sevenSketch = function(p) {
 
     palette = [
       p.color(86, 86, 86, 100),
-      p.color(196, 196, 199,100),
-      p.color(178, 178, 94,100),
-      p.color(94, 94, 94,100),
-      p.color(42, 60, 110,100),
-      p.color(120, 255, 177,100)
+      p.color(196, 196, 199, 100),
+      p.color(55, 69, 54, 100),
+      p.color(94, 94, 94, 100),
+      p.color(42, 60, 110, 100),
+      p.color(120, 255, 177, 100)
     ];
 
     THE_SEED = p.floor(p.random(9999999));
@@ -41,25 +41,27 @@ let sevenSketch = function(p) {
     }
   };
 
-  p.draw = function() {
-  //   p.background(196,196,196);
-  p.stroke(1);
-  p.fill(100);
-  p.rect(0,10, p.width,6);
-  p.rect(980, 0, 6, p.height);
+  p.draw = function () {
+    p.clear();
+
+    //   p.background(196,196,196);
+    p.stroke(1);
+    p.fill(100);
+    p.rect(0, 10, p.width, 6);
+    p.rect(980, 0, 6, p.height);
 
 
     let current_height = 0;
 
     p.fill(100);
     p.rect(8, 0, 2, p.height);
-    p.rect(3,6, 5, 2);
-    p.rect(3,p.height-3, 5, 2);
+    p.rect(3, 6, 5, 2);
+    p.rect(3, p.height - 3, 5, 2);
     p.text('amount', 10, 10);
     p.translate(10, p.height);
 
-    blocks.forEach(function(block, index) {
-      let block_height = p.abs(Math.min(...block[block.length - 1].points) -10);
+    blocks.forEach(function (block, index) {
+      let block_height = p.abs(Math.min(...block[block.length - 1].points) - 10);
 
       if (current_height + block_height < p.height - 100) {
         display_block(block, index);
@@ -84,7 +86,7 @@ let sevenSketch = function(p) {
         for (let i = 0; i <= resolution; i++) {
           points.push(
             p.min(-plate_padding, get_noise(i, plate_index, block_index) - plate_height) +
-              plates[plate_index - 1].points[i]
+            plates[plate_index - 1].points[i]
           );
         }
       } else {
@@ -102,23 +104,23 @@ let sevenSketch = function(p) {
   }
 
   function display_block(block, block_index) {
-    block.forEach(function(plate, index) {
+    block.forEach(function (plate, index) {
       p.fill(plate.color);
       p.beginShape();
-    
+
       if (index === 0) {
         p.vertex(0, 0);
-        p.vertex(100+(p.random(width)), 0);
+        p.vertex(100 + (p.random(width)), 0);
       } else {
         for (let i = 0; i <= resolution; i++) {
           p.vertex(i * p.random(width) / resolution, block[index - 1].points[i] - plate_padding);
         }
       }
       for (let i = resolution; i >= 0; i--) {
-        p.vertex(i * p.random(width)/ resolution, block[index].points[i]);
+        p.vertex(i * p.random(width) / resolution, block[index].points[i]);
       }
       p.endShape(p.CLOSE);
-      
+
     }, this);
   }
 
@@ -129,6 +131,6 @@ let sevenSketch = function(p) {
 };
 
 
-document.addEventListener("DOMContentLoaded", function(){
-var myp5 = new p5(sevenSketch, 'c7');
+document.addEventListener("DOMContentLoaded", function () {
+  var myp5 = new p5(sevenSketch, 'c7');
 });

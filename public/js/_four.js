@@ -27,9 +27,9 @@ let fourSketch = function(p) {
       palette = [
         p.color(86, 86, 86, 100),
         p.color(196, 196, 199,100),
-        p.color(178, 178, 94,100),
+        p.color(55, 69, 54,100),
         p.color(94, 94, 94,100),
-        p.color(42, 60, 110,100),
+        p.color(33, 46, 66,100),
         p.color(227, 227, 227,100)
       ];
   
