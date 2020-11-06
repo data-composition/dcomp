@@ -1,11 +1,11 @@
 let sevenSketch = function(p) {
     let width = 1000;
     let height =500;
-    let offset = -80;
+    let offset = -10;
   
-    let flow_cell_size =8;
+    let flow_cell_size= 10;
   
-    let noise_size = 0.002;
+    let noise_size = 0.02;
     let noise_radius = 0.001; // value change 
   
     let flow_width = (width + offset * 2) / flow_cell_size;
@@ -47,7 +47,7 @@ let sevenSketch = function(p) {
       p.rect(p.random(p.width/2), p.random(p.height/2), 15, 15);
       p.stroke(1);
       p.fill(170);
-      p.text("data composition. 2021. © GRAYCODE, jiiiiin",-70, 310);
+      p.text("data composition. 2021. © GRAYCODE, jiiiiin",0, 430);
     };
   
     function init_flow() {
