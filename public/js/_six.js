@@ -8,7 +8,9 @@ let sixSketch = function(p) {
 
   p.draw = function() {
     p.clear();
-
+    p.stroke(1);
+    p.fill(100);
+    p.rect(0,p.height-20, p.width,6);
    
     for (var i=0; i<25; i++){
       draw_text(i, (p.random(1000)*0.24));

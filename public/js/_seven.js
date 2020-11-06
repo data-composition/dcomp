@@ -1,125 +1,134 @@
 let sevenSketch = function(p) {
-    let width = 1000;
-    let height =500;
-    let offset = -10;
-  
-    let flow_cell_size= 10;
-  
-    let noise_size = 0.02;
-    let noise_radius = 0.001; // value change 
-  
-    let flow_width = (width + offset * 2) / flow_cell_size;
-    let flow_height = (height/2 + offset * 2) / flow_cell_size;
-  
-    let noise_grid = [];
-    let flow_grid = [];
-  
-    let palette;
-  
-    let noise_offset_x, noise_offset_y;
-  
-    let tick = 0;
-    p.setup = function() {
-      p.createCanvas(width, height);
-      p.smooth();
-      p.noLoop();
-  
-      p.strokeWeight(1.5);
-      p.fill(0);
-      p.noStroke();
-  
-      palette = [p.color(178, 178, 94), p.color(178, 78, 54), p.color(151, 86, 0), p.color(86, 86, 86)];
-  
-      init_flow();
-    };
-    p.draw = function() {
-      // p.background(50, 50, 50);
-      p.translate(-offset, -offset);
-      for (var i = 0; i < palette.length; i++) {
-        noise_offset_x = p.random(10);
-        noise_offset_y = p.random(10);
-        init_flow();
-        display_flow(i);
-      }
-      //draw small rect
-      p.noStroke();
-      p.fill(178, 178, 94);
-      p.rect(p.random(p.width/2), p.random(p.height/2), 15, 15);
-      p.stroke(1);
-      p.fill(170);
-      p.text("data composition. 2021. © GRAYCODE, jiiiiin",0, 430);
-    };
-  
-    function init_flow() {
-      flow_grid = [];
-      for (let i = 0; i < flow_height; i++) {
-        let row = [];
-        for (let j = 0; j < flow_width; j++) {
-          row.push(
-            calculate_flow(
-              j * noise_size + p.floor(9 * i / flow_height),
-              i * noise_size + 25 * noise_size * p.floor(3 * j / flow_width),
-              noise_radius
-            )
-          );
-        }
-        flow_grid.push(row);
-      }
+  let THE_SEED;
+
+  let width =100;
+
+  let resolution = 6;
+
+  let noise_zoom = 1;
+  let magnitude = 120;
+
+  let plate_padding = 2;
+
+  let number_of_blocks =10;
+  let blocks = [];
+
+  let palette;
+  let updateCound = 10+(p.random(5));
+
+  p.setup = function() {
+    p.createCanvas(1000, 500);
+    p.clear();
+    p.frameRate(updateCound);
+    p.noLoop();
+    // p.noStroke();
+    p.strokeWeight(0.1);
+
+    palette = [
+      p.color(86, 86, 86, 100),
+      p.color(196, 196, 199,100),
+      p.color(178, 178, 94,100),
+      p.color(94, 94, 94,100),
+      p.color(42, 60, 110,100),
+      p.color(120, 255, 177,100)
+    ];
+
+    THE_SEED = p.floor(p.random(9999999));
+    p.noiseSeed(THE_SEED);
+
+    for (var i = 0; i < number_of_blocks; i++) {
+      blocks.push(create_block(p.random(1, 10), i));
     }
-  
-    function calculate_flow(x, y, r) {
-      let high_val = 0;
-      let low_val = 1;
-      let high_pos = p.createVector(0, 0);
-      let low_pos = p.createVector(0, 0);
-  
-      for (var i = 0; i < 30; i++) {
-        let angle = p.random(p.TAU);
-        let pos = p.createVector(x + p.cos(angle) * r, y + p.sin(angle) * r);
-        let val = p.noise(noise_offset_x + pos.x, noise_offset_y + pos.y);
-  
-        if (val > high_val) {
-          high_val = val;
-          high_pos.x = pos.x;
-          high_pos.y = pos.y;
-        }
-        if (val < low_val) {
-          low_val = val;
-          low_pos.x = pos.x;
-          low_pos.y = pos.y;
-        }
-      }
-  
-      let flow_angle = p.createVector(low_pos.x - high_pos.x, low_pos.y - high_pos.y);
-      flow_angle.normalize().mult((high_val - low_val) / noise_radius);
-      return { arrow: flow_angle, point: p.noise(x, y) };
-    }
-  
-    function display_flow(col) {
-      for (let i = 0; i < flow_grid.length; i++) {
-        for (let j = 0; j < flow_grid[i].length; j++) {
-          p.noStroke();
-          p.fill(0, 0, 0, 0.5);
-          p.stroke(palette[col]);
-          p.line(
-            j * flow_cell_size,
-            i * flow_cell_size,
-            j * flow_cell_size + flow_grid[i][j].arrow.x * flow_cell_size * 1.4,
-            i * flow_cell_size + flow_grid[i][j].arrow.y * flow_cell_size * 1.4
-          );
-        }
-      }
-    }
-  
-    p.keyPressed = function() {
-      if (p.keyCode === 32) {
-        p.saveCanvas('fo', 'jpeg');
-      }
-    };
   };
+
+  p.draw = function() {
+  //   p.background(196,196,196);
+  p.stroke(1);
+  p.fill(100);
+  p.rect(0,10, p.width,6);
+  p.rect(980, 0, 6, p.height);
+
+
+    let current_height = 0;
+
+    p.fill(100);
+    p.rect(8, 0, 2, p.height);
+    p.rect(3,6, 5, 2);
+    p.rect(3,p.height-3, 5, 2);
+    p.text('amount', 10, 10);
+    p.translate(10, p.height);
+
+    blocks.forEach(function(block, index) {
+      let block_height = p.abs(Math.min(...block[block.length - 1].points) -10);
+
+      if (current_height + block_height < p.height - 100) {
+        display_block(block, index);
+        p.translate(0, -block_height);
+        current_height += block_height;
+      } else {
+        p.translate(190, current_height);
+        display_block(block, index);
+        p.translate(0, -block_height);
+        current_height = block_height;
+      }
+    }, this);
+  };
+
+  function create_block(number_of_plates, block_index) {
+    let plates = [];
+    for (var plate_index = 0; plate_index < number_of_plates; plate_index++) {
+      let points = [];
+
+      let plate_height = p.randomGaussian(0, 50);
+      if (plate_index > 0) {
+        for (let i = 0; i <= resolution; i++) {
+          points.push(
+            p.min(-plate_padding, get_noise(i, plate_index, block_index) - plate_height) +
+              plates[plate_index - 1].points[i]
+          );
+        }
+      } else {
+        for (let i = 0; i <= resolution; i++) {
+          points.push(p.min(-plate_padding, get_noise(i, plate_index, block_index) - plate_height));
+        }
+      }
+
+      plates.push({
+        points: points,
+        color: palette[p.floor(p.random(palette.length))]
+      });
+    }
+    return plates;
+  }
+
+  function display_block(block, block_index) {
+    block.forEach(function(plate, index) {
+      p.fill(plate.color);
+      p.beginShape();
+    
+      if (index === 0) {
+        p.vertex(0, 0);
+        p.vertex(100+(p.random(width)), 0);
+      } else {
+        for (let i = 0; i <= resolution; i++) {
+          p.vertex(i * p.random(width) / resolution, block[index - 1].points[i] - plate_padding);
+        }
+      }
+      for (let i = resolution; i >= 0; i--) {
+        p.vertex(i * p.random(width)/ resolution, block[index].points[i]);
+      }
+      p.endShape(p.CLOSE);
+      
+    }, this);
+  }
+
+  function get_noise(x, y, z) {
+    return -magnitude * (p.noise(x / noise_zoom, y, z) - 0.4);
+  }
+
+};
 
 
 document.addEventListener("DOMContentLoaded", function(){
-	var myp5 = new p5(sevenSketch, 'c7');
+var myp5 = new p5(sevenSketch, 'c7');
 });
-  

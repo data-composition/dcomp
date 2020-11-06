@@ -1,23 +1,29 @@
-var s = function (p){
-	let shader_test;
-	p.preload = function(){
-		shader_test = p.loadShader("shaders/blank.vert", "shaders/test.frag");
-	};
-	p.setup = function(){
-		p.createCanvas(900,480, p.WEBGL);
-	};
-	p.draw = function(){
-		p.resetShader();
-		p.shader(shader_test);
-		shader_test.setUniform("iResolution", [900, 480]);
-		shader_test.setUniform("iTime", p.millis()/100.0);	
-		p.rect(0, 0, 900, 480);
+var oneSketch = function( p ) { 
+	var x = 980; 
+	var y = 0; 
+	var speed = 2.65; 
 
+	p.setup = function() {
+	  p.createCanvas(1000, 500);
 	};
-};
-
-document.addEventListener("DOMContentLoaded", function(){
-	var myp5 = new p5(s, 'c1');
-	});
-	
-
+  
+	p.draw = function() {
+	//   p.background(100);
+	  p.clear();
+	  y += speed; 
+	  if(y > p.height*2.5){
+		y = 0; 
+      }
+      p.stroke(1);
+      p.fill(100);
+	  p.rect(980, 0, 6, p.height);
+	  
+      p.fill(1, p.map(y, 0, p.height,255, 10));
+	  p.ellipse(x,y,25,25);
+  
+	};
+  };
+  
+  document.addEventListener("DOMContentLoaded", function(){
+	var myp5 = new p5(oneSketch, 'c1');
+});

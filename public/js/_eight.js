@@ -1,26 +1,26 @@
-let fourSketch = function(p) {
+let eightSketch = function(p) {
     let THE_SEED;
   
-    let width =500;
+    let width =450;
   
-    let resolution = 60;
+    let resolution = 6;
   
-    let noise_zoom = 15;
+    let noise_zoom = 1;
     let magnitude = 120;
   
-    let plate_padding = 20;
+    let plate_padding = 2;
   
-    let number_of_blocks =4;
+    let number_of_blocks =10;
     let blocks = [];
   
     let palette;
-    let updateCound = 1+(p.random(5));
+    let updateCound = 10+(p.random(5));
   
     p.setup = function() {
       p.createCanvas(1000, 500);
       p.clear();
       p.frameRate(updateCound);
-      // p.noLoop();
+      p.noLoop();
       // p.noStroke();
       p.strokeWeight(0.1);
   
@@ -28,7 +28,7 @@ let fourSketch = function(p) {
         p.color(86, 86, 86, 100),
         p.color(196, 196, 199,100),
         p.color(178, 178, 94,100),
-        p.color(94, 94, 94,100),
+        p.color(185, 74, 77,100),
         p.color(42, 60, 110,100),
         p.color(227, 227, 227,100)
       ];
@@ -43,8 +43,15 @@ let fourSketch = function(p) {
   
     p.draw = function() {
     //   p.background(196,196,196);
-      let current_height = 0;
-  
+   
+    p.strokeWeight(1);
+    p.fill(100);
+    p.rect(0,10, 100+p.random(p.width),6);
+    p.rect(990, 0, 6, p.height);
+
+   
+    let current_height = 0;
+      p.strokeWeight(0.1);
       p.fill(100);
       p.rect(8, 0, 2, p.height);
       p.rect(3,6, 5, 2);
@@ -55,7 +62,7 @@ let fourSketch = function(p) {
       blocks.forEach(function(block, index) {
         let block_height = p.abs(Math.min(...block[block.length - 1].points) -10);
   
-        if (current_height + block_height < p.height - 200) {
+        if (current_height + block_height < p.height - 100) {
           display_block(block, index);
           p.translate(0, -block_height);
           current_height += block_height;
@@ -65,7 +72,7 @@ let fourSketch = function(p) {
           p.translate(0, -block_height);
           current_height = block_height;
         }
-	  }, this);
+      }, this);
     };
   
     function create_block(number_of_plates, block_index) {
@@ -102,7 +109,7 @@ let fourSketch = function(p) {
       
         if (index === 0) {
           p.vertex(0, 0);
-          p.vertex(100+(p.random(width)), 0);
+          p.vertex(100+(width), 0);
         } else {
           for (let i = 0; i <= resolution; i++) {
             p.vertex(i * p.random(width) / resolution, block[index - 1].points[i] - plate_padding);
@@ -121,9 +128,9 @@ let fourSketch = function(p) {
     }
   
   };
-
-
+  
+  
   document.addEventListener("DOMContentLoaded", function(){
-	var myp5 = new p5(fourSketch, 'c4');
-});
+  var myp5 = new p5(eightSketch, 'c8');
+  });
   
