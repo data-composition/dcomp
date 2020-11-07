@@ -1,7 +1,7 @@
 let fiveSketch = function (p) {
   let x = 100.0;
   let y = 483;
-  let speed = .5;
+  let speed = .3;
   let seconds = 0;
 
   let visitH;
@@ -10,7 +10,7 @@ let fiveSketch = function (p) {
 
   p.setup = function () {
     p.createCanvas(1000, 500);
-    p.frameRate(44);
+    p.frameRate(60);
 
     visitH = p.hour();
     visitM = p.minute();
@@ -25,9 +25,9 @@ let fiveSketch = function (p) {
       x = 0;
     }
 
-    if(p.frameCount %44 === 0){
+    // if(p.frameCount %44 === 0){
       seconds ++;
-    }
+    // }
 
     p.stroke(1);
     p.fill(100);
@@ -38,7 +38,7 @@ let fiveSketch = function (p) {
     p.fill(1, p.map(x, 0, p.width, 255, 10));
     p.ellipse(x, y, 15,15);
     p.noStroke();
-    p.fill(255, 100);
+    p.fill(255, 130);
     p.rect(p.width / 2 - 120, p.height / 3 - 30, 280, 220);
     p.strokeWeight(0.2);
     p.fill(60);
@@ -47,8 +47,8 @@ let fiveSketch = function (p) {
     p.text('수집된 데이터는 data composition에 사용됩니다.', p.width / 2 - 100, p.height / 3 + (17 * 2));
     p.text('접속한 시간 : ' + visitH + ' 시 ' + visitM + ' 분 ' + visitS+ ' 초 ', p.width / 2 - 100, p.height / 3 + (17 * 4));
     p.text('지금의 시간 : ' + p.hour() + ' 시 ' + p.minute() + ' 분 ' + p.second() + ' 초 ', p.width / 2 - 100, p.height / 3 + (17 * 5));
-    p.text('(1Δ/44Hz)', p.width / 2 + 30, p.height / 3 + (17 * 6));
-    p.text('머물고 있는 순간 (Δ): ' + seconds, p.width / 2 - 100, p.height / 3 + (17 * 6));
+    // p.text('(1Δ/44Hz)', p.width / 2 + 30, p.height / 3 + (17 * 7));
+    p.text('머물고 있는 순간 (Δ1/69Hz) : Δ ' + p.int(seconds/69.), p.width / 2 - 100, p.height / 3 + (17 * 7));
 
     p.text('© datacomposition 2020 by GRAYCODE,jiiiin', p.width / 2 - 100, p.height / 3 + (17 * 10));
 
