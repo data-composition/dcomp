@@ -20,7 +20,7 @@ let fourSketch = function(p) {
       p.createCanvas(1000, 500);
       p.clear();
       p.frameRate(updateCound);
-      // p.noLoop();
+      p.noLoop();
       // p.noStroke();
       p.strokeWeight(0.1);
   
