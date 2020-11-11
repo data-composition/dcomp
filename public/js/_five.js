@@ -1,59 +1,119 @@
 let fiveSketch = function (p) {
-  let x = 100.0;
-  let y = 483;
-  let speed = .3;
-  let seconds = 0;
+  let THE_SEED;
 
-  let visitH;
-  let visitM;
-  let visitS;
+  let width =700;
+
+  let resolution =20;
+
+  let noise_zoom = 15;
+  let magnitude = 100;
+
+  let plate_padding =15; // make space
+
+  let number_of_blocks = 10;
+  let blocks = [];
+
+  let palette;
 
   p.setup = function () {
     p.createCanvas(1000, 500);
-    p.frameRate(60);
+    p.clear();
+    p.noLoop();
+    p.strokeWeight(0.1);
 
-    visitH = p.hour();
-    visitM = p.minute();
-    visitS = p.second();
+    palette = [
+      p.color(86, 86, 86, 100),
+      p.color(196, 196, 199, 100),
+      p.color(33, 46, 66, 100),
+      p.color(94, 94, 94, 100),
+      p.color(42, 60, 110, 100),
+      p.color(227, 227, 227, 100)
+    ];
+
+    THE_SEED = p.floor(p.random(9999999));
+    p.noiseSeed(THE_SEED);
+
+    for (var i = 0; i < number_of_blocks; i++) {
+      blocks.push(create_block(p.random(1, 10), i));
+    }
   };
 
   p.draw = function () {
-    //   p.background(100);
-    p.clear();
-    x += speed;
-    if (x > p.width * 2) {
-      x = 0;
-    }
-
-    // if(p.frameCount %44 === 0){
-      seconds ++;
-    // }
-
-    p.stroke(1);
+    p.background(235, 235, 235);
+    let current_height = 0;
+    
     p.fill(100);
-    p.rect(0, p.height - 20, p.width, 6);
-    p.fill(130);
-    p.rect(0, 5, p.width, 6);
-    p.rect(990, 0, 6, p.height);
-    p.fill(1, p.map(x, 0, p.width, 255, 10));
-    p.ellipse(x, y, 15,15);
-    p.noStroke();
-    p.fill(255, 130);
-    p.rect(p.width / 2 - 120, p.height / 3 - 30, 280, 220);
-    p.strokeWeight(0.2);
-    p.fill(60);
-    p.text('dcomp.site 웹 사이트에서는 방문객이', p.width / 2 - 100, p.height / 3);
-    p.text('웹 페이지에 방문한 시각과 머무른 시간을 수집합니다.', p.width / 2 - 100, p.height / 3 + 17);
-    p.text('수집된 데이터는 data composition에 사용됩니다.', p.width / 2 - 100, p.height / 3 + (17 * 2));
-    p.text('접속한 시간 : ' + visitH + ' 시 ' + visitM + ' 분 ' + visitS+ ' 초 ', p.width / 2 - 100, p.height / 3 + (17 * 4));
-    p.text('지금의 시간 : ' + p.hour() + ' 시 ' + p.minute() + ' 분 ' + p.second() + ' 초 ', p.width / 2 - 100, p.height / 3 + (17 * 5));
-    // p.text('(1Δ/44Hz)', p.width / 2 + 30, p.height / 3 + (17 * 7));
-    p.text('머물고 있는 순간 (Δ1/69Hz) : Δ ' + p.int(seconds/69.), p.width / 2 - 100, p.height / 3 + (17 * 7));
+  
+    
+    p.translate(-300, p.height);
 
-    p.text('© datacomposition 2020 by GRAYCODE,jiiiin', p.width / 2 - 100, p.height / 3 + (17 * 10));
+    blocks.forEach(function (block, index) {
+      let block_height = p.abs(Math.min(...block[block.length - 1].points) - 10);
 
-
+      if (current_height + block_height < p.height -100) {
+        display_block(block, index);
+        p.translate(0, -block_height);
+        current_height += block_height;
+      } else {
+        p.translate(190, current_height);
+        display_block(block, index);
+        p.translate(0, -block_height);
+        current_height = block_height;
+      }
+    }, this);
   };
+
+  function create_block(number_of_plates, block_index) {
+    let plates = [];
+    for (var plate_index = 0; plate_index < number_of_plates; plate_index++) {
+      let points = [];
+
+      let plate_height = p.randomGaussian(0,110);
+      if (plate_index > 0) {
+        for (let i = 0; i <= resolution; i++) {
+          points.push(
+            p.min(-plate_padding, get_noise(i, plate_index, block_index) - plate_height) +
+            plates[plate_index - 1].points[i]
+          );
+        }
+      } else {
+        for (let i = 0; i <= resolution; i++) {
+          points.push(p.min(-plate_padding, get_noise(i, plate_index, block_index) - plate_height));
+        }
+      }
+
+      plates.push({
+        points: points,
+        color: palette[p.floor(p.random(palette.length))]
+      });
+    }
+    return plates;
+  }
+
+  function display_block(block, block_index) {
+    block.forEach(function (plate, index) {
+      p.fill(plate.color);
+      p.beginShape();
+
+      if (index === 0) {
+        p.vertex(0, 0);
+        p.vertex(100 + (p.random(width)), 0);
+      } else {
+        for (let i = 0; i <= resolution; i++) {
+          p.vertex(i * p.random(width) / resolution, block[index - 1].points[i] - plate_padding);
+        }
+      }
+      for (let i = resolution; i >= 0; i--) {
+        p.vertex(i * p.random(width) / resolution, block[index].points[i]);
+      }
+      p.endShape(p.CLOSE);
+
+    }, this);
+  }
+
+  function get_noise(x, y, z) {
+    return -magnitude * (p.noise(x / noise_zoom, y, z) - 0.4);
+  }
 };
 
 document.addEventListener("DOMContentLoaded", function () {
