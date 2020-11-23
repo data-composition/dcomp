@@ -14,6 +14,8 @@ $(document).ready(function(){
     setInterval(function(){
         log();
     }, 1000);
+
+    window.scrollTo(0, 800);
 })
 
 function log() {
