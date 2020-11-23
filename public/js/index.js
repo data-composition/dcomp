@@ -1,5 +1,5 @@
 const userId = uuidv4();
-const apiUrl = 'https://dc.egstep.com'
+const apiUrl = 'https://dc.seoul.kr'
 // const apiUrl = 'http://localhost:3000'
 
 
