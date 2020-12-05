@@ -1,6 +1,6 @@
 const userId = uuidv4();
-// const apiUrl = 'https://dc.egstep.com'
-const apiUrl = 'http://localhost:3000'
+const apiUrl = 'https://dc.seoul.kr'
+// const apiUrl = 'http://localhost:3000'
 
 
 function uuidv4() {
@@ -14,6 +14,8 @@ $(document).ready(function(){
     setInterval(function(){
         log();
     }, 1000);
+
+    window.scrollTo(0, 800);
 })
 
 function log() {

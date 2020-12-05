@@ -1,58 +1,125 @@
 let twoSketch = function (p) {
-	let psize = 10;
-	let tick = 0;
-	let timeFreq = 72;
-	let initValue = 25;
-  
+	let THE_SEED;
+
+	let width = 70;
+
+	let resolution = 20;
+
+	let noise_zoom = 10;
+	let magnitude = 30;
+
+	let plate_padding = 4; // make space
+
+	let number_of_blocks = 2;
+	let blocks = [];
+
+	let palette;
+	// let updateCound = 10+(p.random(10));
+
 	p.setup = function () {
-	  p.createCanvas(1000, 500);
-	  p.colorMode(p.RGB);
-	  p.noiseDetail(4, 0.5);
-	}
-  
-	p.draw = function () {
-	  tick += 1;
-	  p.clear();
-  
-	  p.fill(0, 0.5);
-	  p.rect(0, 0, p.width / 2, p.height);
-  
-	  for (var i = 0; i < p.width / 2 / psize; i++) {
-		for (var j = 0; j < p.height / psize; j++) {
-		  display_noise_time(i, j);
+		p.createCanvas(1000, 500);
+		p.clear();
+		p.noLoop();
+		p.strokeWeight(0.1);
+
+		palette = [
+			p.color(86, 86, 86, 100),
+			p.color(196, 196, 199, 100),
+			p.color(178, 178, 94, 100),
+			p.color(94, 94, 94, 100),
+			p.color(42, 60, 110, 100),
+			p.color(227, 227, 227, 100)
+		];
+
+		THE_SEED = p.floor(p.random(9999999));
+		p.noiseSeed(THE_SEED);
+
+		for (var i = 0; i < number_of_blocks; i++) {
+			blocks.push(create_block(p.random(1, 10), i));
 		}
-	  }
-  
-	  for (var i = 0; i < 25; i++) {
-		draw_text(i, (p.random(1000) * 0.24));
-	  }
-  
-	  p.noStroke();
-	  p.fill(235);
-	  p.rect(0, p.height - 35, p.width, 35); // 아래 긴 네모
-	  p.rect(10, p.height - 100, 100, 30); // 섹션 구분용 네모
-	  p.fill(50);
-	  p.text('3 / 13', 45, p.height - 80);
-	  p.fill(100);
-	  p.rect(0, p.height - 2, p.width, 2); // 아래 라인
-	  p.rect(0, p.height - 6, p.width, 2); // 아래 라인
-  
-	  for (let i = 0; i < p.int(timeFreq / 3); i++) {
-		p.rect(0 + (i * (p.width / p.int(timeFreq / 3))), p.height - 10, 2, 10);
-		p.text(i + initValue, 0 + (i * (p.width / p.int(timeFreq / 3))), p.height - 13);
-	  } // 타임라인 freq = 72;
-  
+	};
+
+	p.draw = function () {
+		// p.background(196, 196, 196);
+		let current_height = 0;
+
+		p.fill(25, 0, 0, 10);
+		p.strokeWeight(0.1);
+		p.rect(600, 360, 400, 100);
+
+		p.textSize(12);
+		p.fill(117);
+		p.text('Notation No. ' + p.int(p.random(100)), 604, 372);
+
+
+		p.translate(420, 452);
+
+		blocks.forEach(function (block, index) {
+			let block_height = p.abs(Math.min(...block[block.length - 1].points) - 1000);
+
+			if (current_height + block_height < p.height - 100) {
+				display_block(block, index);
+				p.translate(0, -block_height);
+				current_height += block_height;
+			} else {
+				p.translate(190, current_height);
+				display_block(block, index);
+				p.translate(0, -block_height);
+				current_height = block_height;
+			}
+		}, this);
+	};
+
+	function create_block(number_of_plates, block_index) {
+		let plates = [];
+		for (var plate_index = 0; plate_index < number_of_plates; plate_index++) {
+			let points = [];
+
+			let plate_height = p.randomGaussian(0, 4);
+			if (plate_index > 0) {
+				for (let i = 0; i <= resolution; i++) {
+					points.push(
+						p.min(-plate_padding, get_noise(i, plate_index, block_index) - plate_height) +
+						plates[plate_index - 1].points[i]
+					);
+				}
+			} else {
+				for (let i = 0; i <= resolution; i++) {
+					points.push(p.min(-plate_padding, get_noise(i, plate_index, block_index) - plate_height));
+				}
+			}
+
+			plates.push({
+				points: points,
+				color: palette[p.floor(p.random(palette.length))]
+			});
+		}
+		return plates;
 	}
-  
-	let display_noise_time = function (x, y) {
-	  p.fill(0);
-	  let d = p.noise(x / 9, y / 50, tick / 50) * psize * 0.7;
-	  p.rect(x * psize, y * psize, d, d);
+
+	function display_block(block, block_index) {
+		block.forEach(function (plate, index) {
+			p.fill(plate.color);
+			p.beginShape();
+
+			if (index === 0) {
+				p.vertex(0, 0);
+				p.vertex(640 + (200), 0);
+			} else {
+				for (let i = 0; i <= resolution; i++) {
+					p.vertex(i * p.random(width) / resolution, block[index - 1].points[i] - plate_padding);
+				}
+			}
+			for (let i = resolution; i >= 0; i--) {
+				p.vertex(i * p.random(width) / resolution, block[index].points[i]);
+			}
+			p.endShape(p.CLOSE);
+
+		}, this);
 	}
-  
-	let draw_text = function (i, n) {
-	  p.fill(80);
-	  p.text(n + '   now on working' + '    ' + n * 0.00001 + '   we got this', p.width / 2 + 10, (p.random(35)) * (i + 1));
+
+	function get_noise(x, y, z) {
+		return -magnitude * (p.noise(x / noise_zoom, y, z) - 0.4);
 	}
 }
 
