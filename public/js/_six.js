@@ -27,8 +27,8 @@ let sixSketch = function (p) {
 
     p.fill(20, 0, 0,10);
     p.strokeWeight(0.1);
-    p.ellipse(900, 130, 100);
-    p.translate(900, 130);
+    p.ellipse(884, 130, 100);
+    p.translate(884, 130);
     display();
 
 

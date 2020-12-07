@@ -1,6 +1,6 @@
 let oneSketch = function (p) {
-	let rectX = 200;
-	let rectY = 120;
+	let rectX = 185;
+	let rectY = 117;
 	let rectW = 600;
 	let rectH = 350;
 	let spaceD = 17;
@@ -9,9 +9,7 @@ let oneSketch = function (p) {
 	let visitM;
 	let visitS;
   
-	let input, greeting, button;
   
-	let scene01, scene02;
   
 	p.setup = function () {
 	  p.createCanvas(1000, 500);
@@ -20,17 +18,6 @@ let oneSketch = function (p) {
 	  visitH = p.hour();
 	  visitM = p.minute();
 	  visitS = p.second();
-  
-	  scene01 = true;
-	  scene02 = false;
-  
-  
-	  button = p.createButton(p.char('1932'));
-	  button.position(810, 450);
-	  button.size(30);
-	  // button.mousePressed(greet);
-	  // button.mousePressed(p.saveCanvas('Data Composition _ ' + p.month() + p.day() + p.hour() + p.minute() + p.second(), 'jpeg'));
-  
 	};
   
 	p.draw = function () {

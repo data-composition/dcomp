@@ -45,14 +45,14 @@ let twoSketch = function (p) {
 
 		p.fill(25, 0, 0, 10);
 		p.strokeWeight(0.1);
-		p.rect(600, 360, 400, 100);
+		p.rect(582, 360, 400, 100);
 
 		p.textSize(12);
 		p.fill(117);
 		p.text('Notation No. ' + p.int(p.random(100)), 604, 372);
 
 
-		p.translate(420, 452);
+		p.translate(405, 452);
 
 		blocks.forEach(function (block, index) {
 			let block_height = p.abs(Math.min(...block[block.length - 1].points) - 1000);
