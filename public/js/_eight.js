@@ -1,12 +1,12 @@
 let eightSketch = function (p) {
-  const w = 800;
-  const h = 800;
+  const w = 380;
+  const h = 100;
   let t = 0;
   let n = 100;
   let particles = [];
 
   p.setup = function() {
-    p.createCanvas(w, h);
+    p.createCanvas(1000, 500);
     p.fill(0);
 
     for(var i = 0; i < n; i++) {
@@ -31,7 +31,7 @@ let eightSketch = function (p) {
   }
 
   let display = function(pos, vel) {
-    p.ellipse(pos.x, pos.y, 2);
+    p.ellipse( 55 + pos.x, 90 + pos.y, 2);
   }
 
   let update = function(pos, vel, seed) {
