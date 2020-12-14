@@ -1,28 +1,31 @@
 <style>
+
     .grid-container {
         display: grid;
         grid-template-columns: 1000px 1000px 1000px;
         {{!-- padding: 1px; --}}
     }
+
     .grid-item {
-        background-color: rgba(255, 255, 255, 0.5); 
+        background-color: rgba(255, 255, 255, 0.5);
         border: 1px solid rgba(255, 255, 255, 0.8);
         padding: 0px;
         font-size: 10px;
         text-align: start;
         height: 500px;
     }
-    html {
-        width: 3000px;
-  
-    }
+
     body {
-        margin:0px;
-        background-image:url("img/map.svg");
-        background-position : left top;
+        margin: 0px;
+        background-image: url("img/map.svg");
+        background-position: left top;
         background-repeat: no-repeat;
-        background-size: 100% 100%;
+        background-size: cover;
     }
+
+    @media only screen and (max-width: 900px) {
+    }
+
 </style>
 
 <div class="grid-container">
