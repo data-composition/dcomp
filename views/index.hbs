@@ -3,27 +3,18 @@
     .grid-container {
         display: grid;
         grid-template-columns: 1000px 1000px 1000px;
-        {{!-- padding: 1px; --}}
     }
 
     .grid-item {
-        background-color: rgba(255, 255, 255, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.8);
         padding: 0px;
         font-family: "Courier New", Courier, monospace;
         font-size: 15px;
         text-align: center;
         height: 500px;
+        color:antiquewhite;
+
     }
-    .grid-nine {
-        background-color: rgb(255, 255, 255);
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        padding-top: 50px;
-        padding-right: 30px;
-        font-family: "Courier New", Courier, monospace;
-        font-size: 15px;
-        height: 500px;
-    }
+
 
     body {
         margin: 0px;
@@ -47,6 +38,6 @@
     <div class="grid-item">{{> six}}</div>
     <div class="grid-item">{{> seven}}</div>
     <div class="grid-item">{{> eight}}</div>
-    <div class="grid-nine">{{> nine}}</div>
+    <div class="grid-item">{{> nine}}</div>
 
 </div>
