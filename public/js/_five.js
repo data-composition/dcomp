@@ -25,9 +25,9 @@ let fiveSketch = function (p) {
 	
 	  p.fill(0);
     p.text('전시가 종료된 후', rectX+90 , rectY + 50 + (spaceD * 1));
-    p.text('«Data Composition -1»', rectX+90 , rectY + 50 + (spaceD * 2));
-    p.text('dc.seoul.kr 사이트에서', rectX+90 , rectY + 50 + (spaceD * 3));
-    p.text('모인 데이터를 활용한 사운드 작품이 발표됩니다.', rectX+90 , rectY + 50 + (spaceD * 4));
+    p.text('«Data Composition -1» - dc.seoul.kr', rectX+90 , rectY + 50 + (spaceD * 2));
+    p.text('웹 사이트를 통해 모아진 데이터를', rectX+90 , rectY + 50 + (spaceD * 3));
+    p.text('활용한 사운드 작품이 발표됩니다.', rectX+90 , rectY + 50 + (spaceD * 4));
   }
 }
 
