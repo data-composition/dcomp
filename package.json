@@ -15,7 +15,7 @@
     ]
   },
   "scripts": {
-    "dev": "NODE_ENV=dev node -r esm .",
+    "dev": "node -r esm .",
     "dev:watch": "nodemon",
     "dw": "nodemon",
     "start:dev": "NODE_ENV=dev node -r esm .",

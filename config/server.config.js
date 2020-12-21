@@ -1,11 +1,12 @@
 import Express from 'express'
 import helmet from 'helmet'
 import path from 'path'
-import ConfigService from '../service/config.service';
+import ConfigService from '../service/config.service'
 import readReadSync from 'recursive-readdir-sync'
 import expHbs from 'express-handlebars'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 
 export default class ServerConfig {
 
@@ -18,6 +19,10 @@ export default class ServerConfig {
         this.app.use(bodyParser.json())
 
         this.app.use(helmet())
+        this.app.use(cors({
+            origin: '*',
+            credentials: true
+        }))
         this.setViewEngine()
         this.setDb()
 
