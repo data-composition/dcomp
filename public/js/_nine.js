@@ -9,9 +9,9 @@ document.addEventListener("DOMContentLoaded", function(){
           let userIds = ''
 
           for(const d of data.docs){
-            userIds += '<span>' + d.userId + ':' + d.target + '</span></br>'
+             userIds += '<span>' + ' connected user id  :  '+  d.userId + ' the staying sector  :  ' + d.target + '</span></br>'
           }
           document.querySelector('#nine').innerHTML = userIds
       });
-    }, 1000)
+    }, 700)
 })
