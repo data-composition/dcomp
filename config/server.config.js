@@ -6,6 +6,7 @@ import readReadSync from 'recursive-readdir-sync'
 import expHbs from 'express-handlebars'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 
 export default class ServerConfig {
 
