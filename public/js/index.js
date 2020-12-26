@@ -1,6 +1,6 @@
 const userId = uuidv4();
-const apiUrl = 'https://dc.seoul.kr'
-// const apiUrl = 'http://localhost:3000'
+// const apiUrl = 'https://dc.seoul.kr'
+const apiUrl = 'http://localhost:3000'
 
 
 function uuidv4() {
