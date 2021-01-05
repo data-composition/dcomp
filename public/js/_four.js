@@ -26,9 +26,9 @@ let fourSketch = function (p) {
 	  // p.background(100);
 	  p.clear();
   
-	  p.fill(250, 255);
-	  p.noStroke();
-	  p.rect(rectX, rectY, rectW, rectH);
+	//   p.fill(250, 255);
+	//   p.noStroke();
+	//   p.rect(rectX, rectY, rectW, rectH);
   
 	  p.textSize(12);
 	
