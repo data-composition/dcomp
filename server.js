@@ -15,9 +15,11 @@ const {combine, timestamp, printf} = winston.format
 async function main() {
 
     // env init --------------------------------------------------------------------------------------------------------
-    const env = ConfigService.NODE_ENV
-    if (env !== 'dev' && env !== 'prd')
-        throw new Error('env must be dev or prd. current:' + env)
+    if (ConfigService.NODE_ENV !== 'dev' && ConfigService.NODE_ENV !== 'prd') {
+        console.log('env is not set. change to dev')
+        ConfigService.NODE_ENV = 'dev'
+    }
+    // throw new Error('env must be dev or prd. current:' + env)
 
     // load env file ---------------------------------------------------------------------------------------------------
     // default 로드 => 환경별 env 파일 로드 후 덮어씌우기
