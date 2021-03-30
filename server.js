@@ -26,9 +26,11 @@ async function main() {
     // load env file ---------------------------------------------------------------------------------------------------
     // default 로드 => 환경별 env 파일 로드 후 덮어씌우기
     dotenv.config({path: `./config/config.default.env`})
-    const envConfig = dotenv.parse(fs.readFileSync(`./config/config.${env}.env`))
-    for (const key in envConfig) {
-        process.env[key] = envConfig[key]
+    if(fs.existsSync(`./config/config.${env}.env`)) {
+        const envConfig = dotenv.parse(fs.readFileSync(`./config/config.${env}.env`))
+        for (const key in envConfig) {
+            process.env[key] = envConfig[key]
+        }
     }
 
     if (fs.existsSync(`./config/secure/config.${env}.env`)) {

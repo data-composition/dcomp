@@ -20,7 +20,7 @@
     "dw": "nodemon",
     "start:dev": "NODE_ENV=dev node -r esm .",
     "start:prd": "NODE_ENV=prd node -r esm .",
-    "start": "NODE_ENV=prd node -r esm ."
+    "start": "node -r esm ."
   },
   "dependencies": {
     "axios": "^0.20.0",
