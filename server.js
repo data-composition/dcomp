@@ -86,10 +86,11 @@ async function main() {
         ]
     })
 
-    logger.debug('main start')
+    let port = process.env.PORT || 3000
+    logger.debug('main start with port:' + port)
 
     const server = new ServerConfig({
-        port: process.env.PORT || 8000,
+        port: process.env.PORT || 3000,
         controllerPath: path.join(__dirname, './controllers'),
         apiPath: path.join(__dirname, './api'),
         middlewares: [allAdvice]
