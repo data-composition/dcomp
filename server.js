@@ -15,9 +15,11 @@ const {combine, timestamp, printf} = winston.format
 async function main() {
 
     // env init --------------------------------------------------------------------------------------------------------
-    if (ConfigService.NODE_ENV !== 'dev' && ConfigService.NODE_ENV !== 'prd') {
+    let env = ConfigService.NODE_ENV
+    if (env !== 'dev' && env !== 'prd') {
         console.log('env is not set. change to dev')
         ConfigService.NODE_ENV = 'dev'
+        env = 'dev'
     }
     // throw new Error('env must be dev or prd. current:' + env)
 

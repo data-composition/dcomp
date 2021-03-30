@@ -24,7 +24,7 @@ export default class ServerConfig {
             credentials: true
         }))
         this.setViewEngine()
-        this.setDb()
+        // this.setDb()
 
         middlewares.forEach(middleware => {
             this.registerMiddleware(middleware)
