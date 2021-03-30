@@ -17,7 +17,7 @@ async function main() {
     // env init --------------------------------------------------------------------------------------------------------
     const env = ConfigService.NODE_ENV
     if (env !== 'dev' && env !== 'prd')
-        throw new Error('env must be dev or prd')
+        throw new Error('env must be dev or prd. current:' + env)
 
     // load env file ---------------------------------------------------------------------------------------------------
     // default 로드 => 환경별 env 파일 로드 후 덮어씌우기
