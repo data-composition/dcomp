@@ -12,7 +12,7 @@ function uuidv4() {
 
 $(document).ready(function(){
     setInterval(function(){
-        log();
+        // log();
     }, 1000);
 
     window.scrollTo(0, 800);
